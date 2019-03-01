@@ -1,0 +1,510 @@
+\documentclass{bredelebeamer}
+
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{lmodern}
+
+
+
+\lstset{
+	frame=tb, % draw a frame at the top and bottom of the code block
+	tabsize=4, % tab space width
+	showstringspaces=false, % don't mark spaces in strings
+	numbers=left, % display line numbers on the left
+	commentstyle=\color{green}, % comment color
+	keywordstyle=\color{blue}, % keyword color
+	stringstyle=\color{red},% string color
+	basicstyle=\tiny
+}
+
+% \graphicspath{/media/sf\_work/docs/presentations/memory/img}
+\graphicspath{{Figures/}{img/}}
+
+%
+%
+%
+\begin{document}
+
+\title{Memory management}   
+\author{Denis Ponizovkin} 
+\date{\today} 
+
+\institute[<EPAM>]
+
+\frame{\titlepage} 
+
+\frame{\frametitle{Table of contents}\tableofcontents} 
+
+%TODO:
+
+
+%    Keep an eye on my heap corruption question - I'm updating with the answers as they shake out. The first was balancing new[] and delete[], but you're already doing that.
+%    Give valgrind more of a go; it's an excellent tool, and I only wish it was available under Windows. I only slows your program down by about half, which is pretty good compared to the Windows equivalents.
+%    Think about using the Google Performance Tools as a replacement malloc/new.
+%    Have you cleaned out all your object files and started over? Perhaps your make file is... "suboptimal"
+%    You're not assert()ing enough in your code. How do I know that without having seen it? Like flossing, no-one assert()s enough in their code. Add in a validation function for your objects and call that on method start and method end.
+%    Are you compiling -wall? If not, do so.
+%    Find yourself a lint tool like PC-Lint. A small app like yours might fit in the PC-lint demo page, meaning no purchase for you!
+%    Check you're NULLing out pointers after deleteing them. Nobody likes a dangling pointer. Same gig with declared but unallocated pointers.
+%    Stop using arrays. Use a vector instead.
+%    Don't use raw pointers. Use a smart pointer. Don't use auto_ptr! That thing is... surprising; its semantics are very odd. Instead, choose one of the Boost smart pointers, or something out of the Loki library.
+
+
+\section{Common mistakes}
+\subsection{Debug tools}
+\begin{frame}[fragile]
+	\frametitle{Debug tools}
+	\begin{exampleblock}{}
+	\begin{itemize}
+		\item \emph{Valgrind} --- is a flexible program for debugging and profiling Linux executables;
+		\item \emph{Google pref tools} --- is a collection of a high-performance multi-threaded malloc()
+			implementation, plus some pretty nifty performance analysis tools. For Unix systems;
+		\item \emph{CRT Library} --- Visual Studio tools.
+	\end{itemize}
+\end{exampleblock}
+\end{frame}
+
+\frame{\frametitle{Common mistakes} 
+\begin{itemize}
+	\item Reassignment;
+	\item Freeing the parent block first;
+	\item Improper handling of return values;
+	\item Many C library functions malloc's memory which MUST be freed;
+	\item Forget free or delete after malloc or new operation accordingly;
+	\item Inheritance, polymorphism and the wrong delete;
+	\item Default copy constructor may not give correct results;
+	\item For new[] uses delete (not delete[]).
+\end{itemize}
+}
+
+\subsection{Reassignment}
+\frame{\frametitle{Common mistakes. Reassignment} 
+\begin{itemize}
+	\item \emph{ Reassignment};
+	\item Freeing the parent block first;
+	\item Improper handling of return values;
+	\item Many C library functions malloc's memory which MUST be freed;
+	\item Forget free or delete after malloc or new operation accordingly;
+	\item Inheritance, polymorphism and the wrong delete;
+	\item Default copy constructor may not give correct results;
+	\item For new[] uses delete (not delete[]).
+\end{itemize}
+}
+
+\begin{frame}[fragile]
+	\frametitle{Reassignment. The code}
+	\begin{center}
+		\begin{lstlisting}[language=C++, caption={Reassignment error example. Part 1.}]
+		char *memoryArea = malloc(10);
+		char *newArea = malloc(10);
+		\end{lstlisting}
+
+		\begin{figure}
+			\includegraphics[height=1.2cm,width=6cm]{reassignment1.png}
+			\caption{Reassignment error example. Part 1.}
+		\end{figure}
+
+		\begin{lstlisting}[language=C++, caption={Reassignment error example. Part 2.}]
+		memoryArea = newArea;
+		free(memoryArea);
+		free(newArea);
+		\end{lstlisting}
+
+		\begin{figure}
+			\includegraphics[height=1.5cm,width=5cm]{reassignment2.png}
+			\caption{Reassignment error example. Part 2.}
+		\end{figure}
+	\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Reassignment. Valgrind output}
+	\begin{center}
+		\begin{figure}
+			\includegraphics[height=4cm,width=10cm]{reassignment-valgrind.png}
+		\end{figure}
+	\end{center}
+\end{frame}
+
+\subsection{Freeing the parent block first}
+\frame{\frametitle{Common mistakes. Freeing the parent block first. The code} 
+\begin{itemize}
+	\item Reassignment;
+	\item \emph{ Freeing the parent block first};
+	\item Improper handling of return values;
+	\item Many C library functions malloc's memory which MUST be freed;
+	\item Forget free or delete after malloc or new operation accordingly;
+	\item Inheritance, polymorphism and the wrong delete;
+	\item Default copy constructor may not give correct results;
+	\item For new[] uses delete (not delete[]).
+\end{itemize}
+}
+
+\begin{frame}[fragile]
+\frametitle{Freeing the parent block first. The code} 
+	\begin{center}
+		\begin{lstlisting}[language=C++]
+		char **memoryArea = (char **)malloc(10);
+		char *newArea =  (char *)malloc(10);
+		memoryArea[2] = newArea;
+
+		free(memoryArea);
+		\end{lstlisting}
+
+		\begin{figure}
+			\includegraphics[height=1.2cm,width=6cm]{freeing-parent-block-first.png}
+		\end{figure}
+	\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Freeing the parent block first. Valgrind output}
+	\begin{center}
+		\begin{figure}
+			\includegraphics[height=4cm,width=10cm]{freeing-parent-block-first-valgrind.png}
+		\end{figure}
+	\end{center}
+\end{frame}
+
+\subsection{Improper handling of return values}
+\frame{\frametitle{Common mistakes. Improper handling of return values} 
+\begin{itemize}
+	\item Reassignment;
+	\item Freeing the parent block first;
+	\item \emph{ Improper handling of return values};
+	\item Many C library functions malloc's memory which MUST be freed;
+	\item Forget free or delete after malloc or new operation accordingly;
+	\item Inheritance, polymorphism and the wrong delete;
+	\item Default copy constructor may not give correct results;
+	\item For new[] uses delete (not delete[]).
+\end{itemize}
+}
+
+\begin{frame}[fragile]
+\frametitle{Improper handling of return values. The code} 
+	\begin{center}
+		\begin{lstlisting}[language=C++]
+		char* f()
+		{
+			char *tmp = static_cast<char *>(malloc(20));
+			return tmp;
+		}
+
+		int main()
+		{
+			f();
+			return 0;
+		}
+		\end{lstlisting}
+	\end{center}
+\end{frame}
+% TODO: make description for all valgrind outputs
+\begin{frame}[fragile]
+	\frametitle{Improper handling of return values. Valgrind output}
+	\begin{center}
+		\begin{figure}
+			\includegraphics[height=4cm,width=10cm]{improper_handling_of_return_values.png}
+		\end{figure}
+	\end{center}
+\end{frame}
+
+\subsection{Many C library functions malloc's memory which MUST be freed}
+\frame{\frametitle{Common mistakes. Many C library functions malloc's memory which MUST be freed}
+\begin{itemize}
+	\item Reassignment;
+	\item Freeing the parent block first;
+	\item Improper handling of return values;
+	\item \emph{ Many C library functions malloc's memory which MUST be freed};
+	\item Forget free or delete after malloc or new operation accordingly;
+	\item Inheritance, polymorphism and the wrong delete;
+	\item Default copy constructor may not give correct results;
+	\item For new[] uses delete (not delete[]).
+\end{itemize}
+}
+
+\begin{frame}[fragile]
+\frametitle{Many C library functions malloc's memory which MUST be freed. The code} 
+	\begin{center}
+		\begin{lstlisting}[language=C++]
+			char str[20] = "this is test";
+			char *p = strdup(str);
+		\end{lstlisting}
+	\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Many C library functions malloc's memory which MUST be freed. Valgrind output}
+	\begin{center}
+		\begin{figure}
+			\includegraphics[height=4cm,width=10cm]{c_funcs_which_allocs_mem.png}
+		\end{figure}
+	\end{center}
+\end{frame}
+
+\subsection{Forget free or delete after malloc or new operation accordingly}
+
+\frame{\frametitle{Common mistakes. Forget free or delete after malloc or new operation accordingly}
+\begin{itemize}
+	\item Reassignment;
+	\item Freeing the parent block first;
+	\item Improper handling of return values;
+	\item Many C library functions malloc's memory which MUST be freed;
+	\item \emph{ Forget free or delete after malloc or new operation accordingly};
+	\item Inheritance, polymorphism and the wrong delete;
+	\item Default copy constructor may not give correct results;
+	\item For new[] uses delete (not delete[]).
+\end{itemize}
+}
+
+\begin{frame}[fragile]
+\frametitle{Forget free or delete after malloc or new operation accordingly. The code} 
+	\begin{center}
+		\begin{lstlisting}[language=C++]
+		void f()
+		{
+			int *ar = new int[15];
+		}
+		
+		int main()
+		{
+			f();
+			return 0;
+		}
+		\end{lstlisting}
+	\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Forget free or delete after malloc or new operation accordingly. Valgrind output}
+	\begin{center}
+		\begin{figure}
+			\includegraphics[height=4cm,width=10cm]{forget.png}
+		\end{figure}
+	\end{center}
+\end{frame}
+
+\subsection{Inheritance, polymorphism and the wrong delete}
+
+\frame{\frametitle{Common mistakes. Inheritance, polymorphism and the wrong delete}
+\begin{itemize}
+	\item Reassignment;
+	\item Freeing the parent block first;
+	\item Improper handling of return values;
+	\item Many C library functions malloc's memory which MUST be freed;
+	\item Forget free or delete after malloc or new operation accordingly;
+	\item \emph{ Inheritance, polymorphism and the wrong delete};
+	\item Default copy constructor may not give correct results;
+	\item For new[] uses delete (not delete[]).
+\end{itemize}
+}
+
+\begin{frame}[fragile]
+\frametitle{Inheritance, polymorphism and the wrong delete. The code} 
+	\begin{center}
+		\begin{lstlisting}[language=C++]
+class Base
+{
+};
+
+class Derived: public Base
+{
+private:
+	int *mData;
+public:
+	Derived() { mData = new int[20]; }
+	virtual ~Derived() { delete [] mData; }
+};
+
+int main()
+{
+	Derived *d = new Derived();
+	Base *b = static_cast<Base *>(d);
+	delete b;
+
+	return 0;
+}
+		\end{lstlisting}
+	\end{center}
+\end{frame}
+
+% A class that declares or inherits a virtual function is called a polymorphic class. 
+\begin{frame}[fragile]
+	\frametitle{Inheritance, polymorphism and the wrong delete. Valgrind output}
+	\begin{center}
+		\begin{figure}
+			\includegraphics[height=4cm,width=10cm]{virtual_destructor.png}
+		\end{figure}
+	\end{center}
+\end{frame}
+
+
+\frame{\frametitle{Common mistakes. Default copy constructor may not give correct results}
+\begin{itemize}
+	\item Reassignment;
+	\item Freeing the parent block first;
+	\item Improper handling of return values;
+	\item Many C library functions malloc's memory which MUST be freed;
+	\item Forget free or delete after malloc or new operation accordingly;
+	\item Inheritance, polymorphism and the wrong delete;
+	\item \emph{ Default copy constructor may not give correct results};
+	\item For new[] uses delete (not delete[]).
+\end{itemize}
+}
+
+\begin{frame}[fragile]
+	\frametitle{Default copy constructor may not give correct results}
+	\begin{center}
+		\begin{lstlisting}[language=C++]
+class A
+{
+private:
+	int *mData;
+	int mN;
+
+public:
+	A(int N): mN(N) { mData = new int[mN]; }
+};
+
+int main()
+{
+	A a1(5);
+	A a2(a1);
+	A a3(5);
+
+	a3 = a2;
+
+	return 0;
+}
+		\end{lstlisting}
+	\end{center}
+\end{frame}
+
+% A class that declares or inherits a virtual function is called a polymorphic class. 
+\begin{frame}[fragile]
+	\frametitle{Default copy constructor may not give correct results}
+	\begin{center}
+		\begin{figure}
+			\includegraphics[height=4cm,width=10cm]{dflt_constructor.png}
+		\end{figure}
+	\end{center}
+\end{frame}
+
+\frame{\frametitle{Common mistakes. For new[] uses delete (not delete[])}
+\begin{itemize}
+	\item Reassignment;
+	\item Freeing the parent block first;
+	\item Improper handling of return values;
+	\item Many C library functions malloc's memory which MUST be freed;
+	\item Forget free or delete after malloc or new operation accordingly;
+	\item Inheritance, polymorphism and the wrong delete;
+	\item Default copy constructor may not give correct results;
+	\item \emph{ For new[] uses delete (not delete[])}.
+\end{itemize}
+}
+
+\begin{frame}[fragile]
+	\frametitle{For new[] uses delete (not delete[])}
+	\begin{center}
+		\begin{lstlisting}[language=C++]
+	char *ar = new char[100];
+	delete ar;
+		\end{lstlisting}
+	\end{center}
+\end{frame}
+
+% A class that declares or inherits a virtual function is called a polymorphic class. 
+\begin{frame}[fragile]
+	\frametitle{For new[] uses delete (not delete[])}
+	\begin{center}
+		\begin{figure}
+			\includegraphics[height=4cm,width=10cm]{delete.png}
+		\end{figure}
+	\end{center}
+\end{frame}
+
+\subsection{}
+
+%\section{Section no. 2} 
+%\subsection{Lists I}
+%\frame{\frametitle{unnumbered lists}
+%\begin{itemize}
+%	\item Introduction to  \LaTeX  
+%	\item Course 2фывфыв
+%	\item Termpapers and presentations with \LaTeX 
+%	\item Beamer class
+%\end{itemize} 
+%}
+%
+%\frame{\frametitle{lists with pause}
+%\begin{itemize}
+%	\item Introduction to  \LaTeX \pause 
+%	\item Course 2 \pause 
+%	\item Termpapers and presentations with \LaTeX \pause 
+%	\item Beamer class
+%\end{itemize} 
+%}
+%
+%\subsection{Lists II}
+%\frame{\frametitle{numbered lists}
+%\begin{enumerate}
+%	\item Introduction to  \LaTeX  
+%	\item Course 2 
+%	\item Termpapers and presentations with \LaTeX 
+%	\item Beamer class
+%\end{enumerate}
+%}
+%\frame{\frametitle{numbered lists with pause}
+%\begin{enumerate}
+%	\item Introduction to  \LaTeX \pause 
+%	\item Course 2 \pause 
+%	\item Termpapers and presentations with \LaTeX \pause 
+%	\item Beamer class
+%\end{enumerate}
+%}
+%
+%\section{Section no.3} 
+%\subsection{Tables}
+%\frame{\frametitle{Tables}
+%\begin{tabular}{|c|c|c|}
+%	\hline
+%	\textbf{Date} & \textbf{Instructor} & \textbf{Title} \\
+%	\hline
+%	WS 04/05 & Sascha Frank & First steps with  \LaTeX  \\
+%	\hline
+%	SS 05 & Sascha Frank & \LaTeX \ Course serial \\
+%	\hline
+%\end{tabular}}
+%
+%
+%\frame{\frametitle{Tables with pause}
+%\begin{tabular}{c c c}
+%	A & B & C \\ 
+%	\pause 
+%	1 & 2 & 3 \\  
+%	\pause 
+%	A & B & C \\ 
+%\end{tabular} }
+%
+%
+%\section{Section no. 4}
+%\subsection{blocs}
+%\frame{\frametitle{blocs}
+%
+%\begin{block}{title of the bloc}
+%	bloc text
+%\end{block}
+%
+%\begin{exampleblock}{title of the bloc}
+%	bloc text
+%\end{exampleblock}
+%
+%
+%\begin{alertblock}{title of the bloc}
+%	bloc text
+%\end{alertblock}
+%}
+\end{document}
+
