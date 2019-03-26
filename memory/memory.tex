@@ -57,16 +57,24 @@
 \subsection{Debug tools}
 \begin{frame}[fragile]
 	\frametitle{Debug tools}
-	\begin{exampleblock}{}
+	\begin{exampleblock}{Tools for debugging and profiling}
 	\begin{itemize}
 		\item \emph{Valgrind} --- is a flexible program for debugging and profiling Linux executables;
 		\item \emph{Google pref tools} --- is a collection of a high-performance multi-threaded malloc()
 			implementation, plus some pretty nifty performance analysis tools. For Unix systems;
 		\item \emph{CRT Library} --- Visual Studio tools.
 	\end{itemize}
-\end{exampleblock}
+	\end{exampleblock}
+
+	\begin{exampleblock}{Static analyzers}
+	\begin{itemize}
+		\item \emph{Cppcheck};
+		\item \emph{PvsStudio}.
+	\end{itemize}
+	\end{exampleblock}
 \end{frame}
 
+\subsection{Common mistakes list}
 \frame{\frametitle{Common mistakes} 
 \begin{itemize}
 	\item Reassignment;
@@ -76,7 +84,9 @@
 	\item Forget free or delete after malloc or new operation accordingly;
 	\item Inheritance, polymorphism and the wrong delete;
 	\item Default copy constructor may not give correct results;
-	\item For new[] uses delete (not delete[]).
+	\item For new[] uses delete (not delete[]);
+	\item Out of bounds array;
+	\item Forget free static/global variables or resource.
 \end{itemize}
 }
 
@@ -91,6 +101,8 @@
 	\item Inheritance, polymorphism and the wrong delete;
 	\item Default copy constructor may not give correct results;
 	\item For new[] uses delete (not delete[]).
+	\item Out of bounds array;
+	\item Forget free static/global variables or resource.
 \end{itemize}
 }
 
@@ -140,6 +152,8 @@
 	\item Inheritance, polymorphism and the wrong delete;
 	\item Default copy constructor may not give correct results;
 	\item For new[] uses delete (not delete[]).
+	\item Out of bounds array;
+	\item Forget free static/global variables or resource.
 \end{itemize}
 }
 
@@ -155,7 +169,13 @@
 		\end{lstlisting}
 
 		\begin{figure}
-			\includegraphics[height=1.2cm,width=6cm]{freeing-parent-block-first.png}
+			\caption{Parent block and child block}
+			\includegraphics[height=1cm,width=5cm]{freeing-parent-block-first.png}
+		\end{figure}
+
+		\begin{figure}
+			\caption{Parent block freed}
+			\includegraphics[height=1cm,width=5cm]{freeing-parent-block-first2.png}
 		\end{figure}
 	\end{center}
 \end{frame}
@@ -180,6 +200,8 @@
 	\item Inheritance, polymorphism and the wrong delete;
 	\item Default copy constructor may not give correct results;
 	\item For new[] uses delete (not delete[]).
+	\item Out of bounds array;
+	\item Forget free static/global variables or resource.
 \end{itemize}
 }
 
@@ -221,7 +243,9 @@
 	\item Forget free or delete after malloc or new operation accordingly;
 	\item Inheritance, polymorphism and the wrong delete;
 	\item Default copy constructor may not give correct results;
-	\item For new[] uses delete (not delete[]).
+	\item For new[] uses delete (not delete[]);
+	\item Out of bounds array;
+	\item Forget free static/global variables or resource.
 \end{itemize}
 }
 
@@ -255,7 +279,9 @@
 	\item \emph{ Forget free or delete after malloc or new operation accordingly};
 	\item Inheritance, polymorphism and the wrong delete;
 	\item Default copy constructor may not give correct results;
-	\item For new[] uses delete (not delete[]).
+	\item For new[] uses delete (not delete[]);
+	\item Out of bounds array;
+	\item Forget free static/global variables or resource.
 \end{itemize}
 }
 
@@ -297,7 +323,9 @@
 	\item Forget free or delete after malloc or new operation accordingly;
 	\item \emph{ Inheritance, polymorphism and the wrong delete};
 	\item Default copy constructor may not give correct results;
-	\item For new[] uses delete (not delete[]).
+	\item For new[] uses delete (not delete[]);
+	\item Out of bounds array;
+	\item Forget free static/global variables or resource.
 \end{itemize}
 }
 
@@ -315,7 +343,7 @@ private:
 	int *mData;
 public:
 	Derived() { mData = new int[20]; }
-	virtual ~Derived() { delete [] mData; }
+	~Derived() { delete [] mData; }
 };
 
 int main()
@@ -350,7 +378,9 @@ int main()
 	\item Forget free or delete after malloc or new operation accordingly;
 	\item Inheritance, polymorphism and the wrong delete;
 	\item \emph{ Default copy constructor may not give correct results};
-	\item For new[] uses delete (not delete[]).
+	\item For new[] uses delete (not delete[]);
+	\item Out of bounds array;
+	\item Forget free static/global variables or resource.
 \end{itemize}
 }
 
@@ -401,7 +431,9 @@ int main()
 	\item Forget free or delete after malloc or new operation accordingly;
 	\item Inheritance, polymorphism and the wrong delete;
 	\item Default copy constructor may not give correct results;
-	\item \emph{ For new[] uses delete (not delete[])}.
+	\item \emph{ For new[] uses delete (not delete[])};
+	\item Out of bounds array;
+	\item Forget free static/global variables or resource.
 \end{itemize}
 }
 
@@ -425,86 +457,136 @@ int main()
 	\end{center}
 \end{frame}
 
-\subsection{}
 
-%\section{Section no. 2} 
-%\subsection{Lists I}
-%\frame{\frametitle{unnumbered lists}
-%\begin{itemize}
-%	\item Introduction to  \LaTeX  
-%	\item Course 2фывфыв
-%	\item Termpapers and presentations with \LaTeX 
-%	\item Beamer class
-%\end{itemize} 
-%}
-%
-%\frame{\frametitle{lists with pause}
-%\begin{itemize}
-%	\item Introduction to  \LaTeX \pause 
-%	\item Course 2 \pause 
-%	\item Termpapers and presentations with \LaTeX \pause 
-%	\item Beamer class
-%\end{itemize} 
-%}
-%
-%\subsection{Lists II}
-%\frame{\frametitle{numbered lists}
-%\begin{enumerate}
-%	\item Introduction to  \LaTeX  
-%	\item Course 2 
-%	\item Termpapers and presentations with \LaTeX 
-%	\item Beamer class
-%\end{enumerate}
-%}
-%\frame{\frametitle{numbered lists with pause}
-%\begin{enumerate}
-%	\item Introduction to  \LaTeX \pause 
-%	\item Course 2 \pause 
-%	\item Termpapers and presentations with \LaTeX \pause 
-%	\item Beamer class
-%\end{enumerate}
-%}
-%
-%\section{Section no.3} 
-%\subsection{Tables}
-%\frame{\frametitle{Tables}
-%\begin{tabular}{|c|c|c|}
-%	\hline
-%	\textbf{Date} & \textbf{Instructor} & \textbf{Title} \\
-%	\hline
-%	WS 04/05 & Sascha Frank & First steps with  \LaTeX  \\
-%	\hline
-%	SS 05 & Sascha Frank & \LaTeX \ Course serial \\
-%	\hline
-%\end{tabular}}
-%
-%
-%\frame{\frametitle{Tables with pause}
-%\begin{tabular}{c c c}
-%	A & B & C \\ 
-%	\pause 
-%	1 & 2 & 3 \\  
-%	\pause 
-%	A & B & C \\ 
-%\end{tabular} }
-%
-%
-%\section{Section no. 4}
-%\subsection{blocs}
-%\frame{\frametitle{blocs}
-%
-%\begin{block}{title of the bloc}
-%	bloc text
-%\end{block}
-%
-%\begin{exampleblock}{title of the bloc}
-%	bloc text
-%\end{exampleblock}
-%
-%
-%\begin{alertblock}{title of the bloc}
-%	bloc text
-%\end{alertblock}
-%}
+\frame{\frametitle{Common mistakes. Out of bounds array}
+\begin{itemize}
+	\item Reassignment;
+	\item Freeing the parent block first;
+	\item Improper handling of return values;
+	\item Many C library functions malloc's memory which MUST be freed;
+	\item Forget free or delete after malloc or new operation accordingly;
+	\item Inheritance, polymorphism and the wrong delete;
+	\item Default copy constructor may not give correct results;
+	\item For new[] uses delete (not delete[]);
+	\item \emph{ Out of bounds array};
+	\item Forget free static/global variables or resource.
+\end{itemize}
+}
+
+\begin{frame}[fragile]
+	\frametitle{Out of bounds array}
+	\begin{center}
+		\begin{lstlisting}[language=C++]
+int f()
+{
+	return 10;
+}
+
+int main()
+{
+	int a[3];
+	a[f()] = 10;
+	return 0;
+}
+		\end{lstlisting}
+	\end{center}
+	\begin{center}
+		\begin{figure}
+			\includegraphics[height=1cm,width=10cm]{cppcheck.png}
+		\end{figure}
+	\end{center}
+\end{frame}
+
+\frame{\frametitle{Common mistakes. Out of bounds array}
+\begin{itemize}
+	\item Reassignment;
+	\item Freeing the parent block first;
+	\item Improper handling of return values;
+	\item Many C library functions malloc's memory which MUST be freed;
+	\item Forget free or delete after malloc or new operation accordingly;
+	\item Inheritance, polymorphism and the wrong delete;
+	\item Default copy constructor may not give correct results;
+	\item For new[] uses delete (not delete[]);
+	\item Out of bounds array;
+	\item \emph{ Forget free static/global variables or resource}.
+\end{itemize}
+}
+
+% A class that declares or inherits a virtual function is called a polymorphic class. 
+\begin{frame}[fragile]
+	\frametitle{Forget free static/global variables or resource}
+	\begin{center}
+		\begin{lstlisting}[language=C++]
+void foo(void)
+{
+	static char *working_buf = NULL;
+	if (!working_buf) {
+		working_buf = (char *) malloc(16 * 1024);
+	}
+}
+
+int main()
+{
+	foo();
+	return 0;
+}
+
+		\end{lstlisting}
+	\end{center}
+
+	\begin{center}
+		\begin{figure}
+			\includegraphics[height=1.5cm,width=11cm]{forget_free_static.png}
+		\end{figure}
+	\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Forget free static/global variables or resource}
+	\begin{center}
+		\begin{lstlisting}[language=C++]
+void foo(void)
+{
+	return 1;
+}
+
+int main()
+{
+	foo();
+	return 0;
+}
+
+		\end{lstlisting}
+	\end{center}
+
+	\begin{center}
+		\begin{figure}
+			\includegraphics[height=1.5cm,width=11cm]{forget_free_static2.png}
+		\end{figure}
+	\end{center}
+\end{frame}
+
+\subsection{Tips to avoid problems}
+\begin{frame}[fragile]
+	\frametitle{}
+	\begin{center}
+		\begin{exampleblock}{}
+			Use smart pointers (shared\_ptr for example).
+		\end{exampleblock}
+		\begin{exampleblock}{}
+			Write own copy constructor for deep copy.
+		\end{exampleblock}
+		\begin{exampleblock}{}
+			RAII idiom.
+		\end{exampleblock}
+		\begin{exampleblock}{}
+			Use virtual destructors.
+		\end{exampleblock}
+		\begin{exampleblock}{}
+		Right using of delete[] operator
+		\end{exampleblock}
+	\end{center}
+\end{frame}
+
 \end{document}
 
