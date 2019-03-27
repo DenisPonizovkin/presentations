@@ -519,77 +519,22 @@ int main()
 	\end{center}
 \end{frame}
 
-\subsection{Forget free static/global variables or resource}
-\frame{\frametitle{Common mistakes. Out of bounds array}
-\begin{itemize}
-	\item Reassignment;
-	\item Freeing/lost the parent block first;
-	\item Improper handling of return values;
-	\item Many C library functions malloc's memory which MUST be freed;
-	\item Forget free or delete after malloc or new operation accordingly;
-	\item Inheritance, polymorphism and the wrong delete;
-	\item Default copy constructor may not give correct results;
-	\item For new[] uses delete (not delete[]);
-	\item Out of bounds array;
-	\item \emph{ Forget free static/global variables or resource}.
-\end{itemize}
-}
-
-% A class that declares or inherits a virtual function is called a polymorphic class. 
-<<<<<<< HEAD
-\begin{frame}[fragile]
-	\frametitle{Forget free static/global variables or resource}
-	\begin{center}
-		\begin{lstlisting}[language=C++]
-void foo(void)
-{
-	static char *working_buf = NULL;
-	if (!working_buf) {
-		working_buf = (char *) malloc(16 * 1024);
-	}
-}
-
-int main()
-{
-	foo();
-	return 0;
-}
-
-		\end{lstlisting}
-	\end{center}
-
-	\begin{center}
-		\begin{figure}
-			\includegraphics[height=1.5cm,width=11cm]{forget_free_static.png}
-		\end{figure}
-	\end{center}
-\end{frame}
-
-% TODO: wrong example. Must be file opening
-\begin{frame}[fragile]
-	\frametitle{Forget free static/global variables or resource}
-	\begin{center}
-		\begin{lstlisting}[language=C++]
-void foo(void)
-{
-	return 1;
-}
-
-int main()
-{
-	foo();
-	return 0;
-}
-
-		\end{lstlisting}
-	\end{center}
-
-	\begin{center}
-		\begin{figure}
-			\includegraphics[height=1.5cm,width=11cm]{forget_free_static2.png}
-		\end{figure}
-	\end{center}
-\end{frame}
+%\subsection{Forget free static/global variables or resource}
+%\begin{frame}[fragile]
+%\frametitle{Common mistakes. Out of bounds array}
+%\begin{itemize}
+%	\item Reassignment;
+%	\item Freeing/lost the parent block first;
+%	\item Improper handling of return values;
+%	\item Many C library functions malloc's memory which MUST be freed;
+%	\item Forget free or delete after malloc or new operation accordingly;
+%	\item Inheritance, polymorphism and the wrong delete;
+%	\item Default copy constructor may not give correct results;
+%	\item For new[] uses delete (not delete[]);
+%	\item Out of bounds array;
+%	\item \emph{ Forget free static/global variables or resource}.
+%\end{itemize}
+%\end{frame}
 
 %\begin{frame}[fragile]
 %	\frametitle{Forget free static/global variables or resource}
@@ -618,35 +563,35 @@ int main()
 %		\end{figure}
 %	\end{center}
 %\end{frame}
-%
-%\begin{frame}[fragile]
-%	\frametitle{Forget free static/global variables or resource}
-%	\begin{center}
-%		\begin{lstlisting}[language=C++]
-%void foo(void)
-%{
-%	return 1;
-%}
-%
-%int main()
-%{
-%	foo();
-%	return 0;
-%}
-%
-%		\end{lstlisting}
-%	\end{center}
-%
-%	\begin{center}
-%		\begin{figure}
-%			\includegraphics[height=1.5cm,width=11cm]{forget_free_static2.png}
-%		\end{figure}
-%	\end{center}
-%\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Forget free static/global variables or resource}
+	\begin{center}
+		\begin{lstlisting}[language=C++]
+void foo(void)
+{
+	return 1;
+}
+
+int main()
+{
+	foo();
+	return 0;
+}
+
+		\end{lstlisting}
+	\end{center}
+
+	\begin{center}
+		\begin{figure}
+			\includegraphics[height=1.5cm,width=11cm]{forget_free_static2.png}
+		\end{figure}
+	\end{center}
+\end{frame}
 
 \section{Tips to avoid problems}
 \begin{frame}[fragile]
-	\frametitle{}
+	\frametitle{Tips}
 	\begin{center}
 		\begin{exampleblock}{}
 			Use smart pointers (shared\_ptr for example).
@@ -667,7 +612,7 @@ int main()
 		}
 
 		\end{lstlisting}
-	\end{center}
+
 		\end{exampleblock}
 		\begin{exampleblock}{}
 			Use virtual destructors.
