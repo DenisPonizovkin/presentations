@@ -77,7 +77,7 @@
 \frame{\frametitle{Common mistakes} 
 \begin{itemize}
 	\item Reassignment;
-	\item Freeing the parent block first;
+	\item Freeing/lost the parent block first;
 	\item Improper handling of return values;
 	\item Many C library functions malloc's memory which MUST be freed;
 	\item Forget free or delete after malloc or new operation accordingly;
@@ -93,7 +93,7 @@
 \frame{\frametitle{Common mistakes. Reassignment} 
 \begin{itemize}
 	\item \emph{ Reassignment};
-	\item Freeing the parent block first;
+	\item Freeing/lost the parent block first;
 	\item Improper handling of return values;
 	\item Many C library functions malloc's memory which MUST be freed;
 	\item Forget free or delete after malloc or new operation accordingly;
@@ -140,11 +140,11 @@
 	\end{center}
 \end{frame}
 
-\subsection{Freeing the parent block first}
-\frame{\frametitle{Common mistakes. Freeing the parent block first. The code} 
+\subsection{Freeing/lost the parent block first}
+\frame{\frametitle{Common mistakes. Freeing/lost the parent block first. The code} 
 \begin{itemize}
 	\item Reassignment;
-	\item \emph{ Freeing the parent block first};
+	\item \emph{ Freeing/lost the parent block first};
 	\item Improper handling of return values;
 	\item Many C library functions malloc's memory which MUST be freed;
 	\item Forget free or delete after malloc or new operation accordingly;
@@ -157,14 +157,12 @@
 }
 
 \begin{frame}[fragile]
-\frametitle{Freeing the parent block first. The code} 
+\frametitle{Freeing/lost the parent block first. The code} 
 	\begin{center}
 		\begin{lstlisting}[language=C++]
-		char **memoryArea = (char **)malloc(10);
-		char *newArea =  (char *)malloc(10);
-		memoryArea[2] = newArea;
-
-		free(memoryArea);
+	char **parentBlock = (char **)malloc(10);
+	char *childBlock =  (char *)malloc(10);
+	parentBlock[2] = childBlock;
 		\end{lstlisting}
 
 		\begin{figure}
@@ -172,6 +170,9 @@
 			\includegraphics[height=1cm,width=5cm]{freeing-parent-block-first.png}
 		\end{figure}
 
+		\begin{lstlisting}[language=C++]
+		free(parentBlock)
+		\end{lstlisting}
 		\begin{figure}
 			\caption{Parent block freed}
 			\includegraphics[height=1cm,width=5cm]{freeing-parent-block-first2.png}
@@ -180,10 +181,30 @@
 \end{frame}
 
 \begin{frame}[fragile]
-	\frametitle{Freeing the parent block first. Valgrind output}
+	\frametitle{Freeing/lost the parent block first. Valgrind output}
 	\begin{center}
 		\begin{figure}
 			\includegraphics[height=4cm,width=10cm]{freeing-parent-block-first-valgrind.png}
+		\end{figure}
+	\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Freeing/lost the parent block first. The code} 
+	\begin{center}
+		\begin{lstlisting}[language=C++]
+	char **parentBlock = (char **)malloc(100);
+	char *childBlock =  (char *)malloc(10);
+	p = (void **)0xAAAAAAAA;
+		\end{lstlisting}
+	\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Freeing/lost the parent block first. Valgrind output}
+	\begin{center}
+		\begin{figure}
+			\includegraphics[height=4cm,width=10cm]{freeing-parent-block-first-valgrind-indir.png}
 		\end{figure}
 	\end{center}
 \end{frame}
@@ -192,7 +213,7 @@
 \frame{\frametitle{Common mistakes. Improper handling of return values} 
 \begin{itemize}
 	\item Reassignment;
-	\item Freeing the parent block first;
+	\item Freeing/lost the parent block first;
 	\item \emph{ Improper handling of return values};
 	\item Many C library functions malloc's memory which MUST be freed;
 	\item Forget free or delete after malloc or new operation accordingly;
@@ -236,7 +257,7 @@
 \frame{\frametitle{Common mistakes. Many C library functions malloc's memory which MUST be freed}
 \begin{itemize}
 	\item Reassignment;
-	\item Freeing the parent block first;
+	\item Freeing/lost the parent block first;
 	\item Improper handling of return values;
 	\item \emph{ Many C library functions malloc's memory which MUST be freed};
 	\item Forget free or delete after malloc or new operation accordingly;
@@ -272,7 +293,7 @@
 \frame{\frametitle{Common mistakes. Forget free or delete after malloc or new operation accordingly}
 \begin{itemize}
 	\item Reassignment;
-	\item Freeing the parent block first;
+	\item Freeing/lost the parent block first;
 	\item Improper handling of return values;
 	\item Many C library functions malloc's memory which MUST be freed;
 	\item \emph{ Forget free or delete after malloc or new operation accordingly};
@@ -316,7 +337,7 @@
 \frame{\frametitle{Common mistakes. Inheritance, polymorphism and the wrong delete}
 \begin{itemize}
 	\item Reassignment;
-	\item Freeing the parent block first;
+	\item Freeing/lost the parent block first;
 	\item Improper handling of return values;
 	\item Many C library functions malloc's memory which MUST be freed;
 	\item Forget free or delete after malloc or new operation accordingly;
@@ -372,7 +393,7 @@ int main()
 \frame{\frametitle{Common mistakes. Default copy constructor may not give correct results}
 \begin{itemize}
 	\item Reassignment;
-	\item Freeing the parent block first;
+	\item Freeing/lost the parent block first;
 	\item Improper handling of return values;
 	\item Many C library functions malloc's memory which MUST be freed;
 	\item Forget free or delete after malloc or new operation accordingly;
@@ -426,7 +447,7 @@ int main()
 \frame{\frametitle{Common mistakes. For new[] uses delete (not delete[])}
 \begin{itemize}
 	\item Reassignment;
-	\item Freeing the parent block first;
+	\item Freeing/lost the parent block first;
 	\item Improper handling of return values;
 	\item Many C library functions malloc's memory which MUST be freed;
 	\item Forget free or delete after malloc or new operation accordingly;
@@ -462,7 +483,7 @@ int main()
 \frame{\frametitle{Common mistakes. Out of bounds array}
 \begin{itemize}
 	\item Reassignment;
-	\item Freeing the parent block first;
+	\item Freeing/lost the parent block first;
 	\item Improper handling of return values;
 	\item Many C library functions malloc's memory which MUST be freed;
 	\item Forget free or delete after malloc or new operation accordingly;
@@ -502,7 +523,7 @@ int main()
 \frame{\frametitle{Common mistakes. Out of bounds array}
 \begin{itemize}
 	\item Reassignment;
-	\item Freeing the parent block first;
+	\item Freeing/lost the parent block first;
 	\item Improper handling of return values;
 	\item Many C library functions malloc's memory which MUST be freed;
 	\item Forget free or delete after malloc or new operation accordingly;
@@ -515,6 +536,7 @@ int main()
 }
 
 % A class that declares or inherits a virtual function is called a polymorphic class. 
+<<<<<<< HEAD
 \begin{frame}[fragile]
 	\frametitle{Forget free static/global variables or resource}
 	\begin{center}
@@ -568,6 +590,59 @@ int main()
 		\end{figure}
 	\end{center}
 \end{frame}
+
+%\begin{frame}[fragile]
+%	\frametitle{Forget free static/global variables or resource}
+%	\begin{center}
+%		\begin{lstlisting}[language=C++]
+%void foo(void)
+%{
+%	static char *working_buf = NULL;
+%	if (!working_buf) {
+%		working_buf = (char *) malloc(16 * 1024);
+%	}
+%}
+%
+%int main()
+%{
+%	foo();
+%	return 0;
+%}
+%
+%		\end{lstlisting}
+%	\end{center}
+%
+%	\begin{center}
+%		\begin{figure}
+%			\includegraphics[height=1.5cm,width=11cm]{forget_free_static.png}
+%		\end{figure}
+%	\end{center}
+%\end{frame}
+%
+%\begin{frame}[fragile]
+%	\frametitle{Forget free static/global variables or resource}
+%	\begin{center}
+%		\begin{lstlisting}[language=C++]
+%void foo(void)
+%{
+%	return 1;
+%}
+%
+%int main()
+%{
+%	foo();
+%	return 0;
+%}
+%
+%		\end{lstlisting}
+%	\end{center}
+%
+%	\begin{center}
+%		\begin{figure}
+%			\includegraphics[height=1.5cm,width=11cm]{forget_free_static2.png}
+%		\end{figure}
+%	\end{center}
+%\end{frame}
 
 \section{Tips to avoid problems}
 \begin{frame}[fragile]
