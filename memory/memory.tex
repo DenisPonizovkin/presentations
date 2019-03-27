@@ -53,8 +53,7 @@
 %    Don't use raw pointers. Use a smart pointer. Don't use auto_ptr! That thing is... surprising; its semantics are very odd. Instead, choose one of the Boost smart pointers, or something out of the Loki library.
 
 
-\section{Common mistakes}
-\subsection{Debug tools}
+\section{Debug tools}
 \begin{frame}[fragile]
 	\frametitle{Debug tools}
 	\begin{exampleblock}{Tools for debugging and profiling}
@@ -74,7 +73,7 @@
 	\end{exampleblock}
 \end{frame}
 
-\subsection{Common mistakes list}
+\section{Common mistakes}
 \frame{\frametitle{Common mistakes} 
 \begin{itemize}
 	\item Reassignment;
@@ -369,6 +368,7 @@ int main()
 \end{frame}
 
 
+\subsection{Default copy constructor may not give correct results}
 \frame{\frametitle{Common mistakes. Default copy constructor may not give correct results}
 \begin{itemize}
 	\item Reassignment;
@@ -422,6 +422,7 @@ int main()
 	\end{center}
 \end{frame}
 
+\subsection{For new[] uses delete (not delete[]}
 \frame{\frametitle{Common mistakes. For new[] uses delete (not delete[])}
 \begin{itemize}
 	\item Reassignment;
@@ -457,7 +458,7 @@ int main()
 	\end{center}
 \end{frame}
 
-
+\subsection{Out of bounds array}
 \frame{\frametitle{Common mistakes. Out of bounds array}
 \begin{itemize}
 	\item Reassignment;
@@ -492,11 +493,12 @@ int main()
 	\end{center}
 	\begin{center}
 		\begin{figure}
-			\includegraphics[height=1cm,width=10cm]{cppcheck.png}
+			\includegraphics[height=0.7cm,width=10cm]{cppcheck.png}
 		\end{figure}
 	\end{center}
 \end{frame}
 
+\subsection{Forget free static/global variables or resource}
 \frame{\frametitle{Common mistakes. Out of bounds array}
 \begin{itemize}
 	\item Reassignment;
@@ -541,6 +543,7 @@ int main()
 	\end{center}
 \end{frame}
 
+% TODO: wrong example. Must be file opening
 \begin{frame}[fragile]
 	\frametitle{Forget free static/global variables or resource}
 	\begin{center}
@@ -566,7 +569,7 @@ int main()
 	\end{center}
 \end{frame}
 
-\subsection{Tips to avoid problems}
+\section{Tips to avoid problems}
 \begin{frame}[fragile]
 	\frametitle{}
 	\begin{center}
@@ -577,7 +580,19 @@ int main()
 			Write own copy constructor for deep copy.
 		\end{exampleblock}
 		\begin{exampleblock}{}
-			RAII idiom.
+			RAII idiom (resource aquision is initialisation).
+		\begin{lstlisting}[language=C++]
+		class RaiiDbExample
+		{
+		private:
+			DataBase mDb;
+		public:
+			RaiiDbExample() {mDb.connect();}
+			~RaiiDbExample() {mDb.disconnect();}
+		}
+
+		\end{lstlisting}
+	\end{center}
 		\end{exampleblock}
 		\begin{exampleblock}{}
 			Use virtual destructors.
