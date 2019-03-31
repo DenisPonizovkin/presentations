@@ -1,4 +1,6 @@
-\documentclass{bredelebeamer}
+\documentclass[10pt,xcolor={usenames,dvipsnames}]{beamer}
+% \documentclass{bredelebeamer}
+\usetheme{JuanLesPins}
 
 \usepackage[T2A]{fontenc}
 \usepackage[utf8]{inputenc}
@@ -23,6 +25,7 @@
 % \graphicspath{/media/sf\_work/docs/presentations/memory/img}
 \graphicspath{{Figures/}{img/}}
 
+% TODO: default, destructor with delete, output addres
 %
 %
 %
@@ -30,7 +33,6 @@
 
 \title{Memory management}   
 \author{Denis Ponizovkin} 
-\date{\today} 
 
 \institute[<EPAM>]
 
@@ -58,17 +60,17 @@
 	\frametitle{Debug tools}
 	\begin{exampleblock}{Tools for debugging and profiling}
 	\begin{itemize}
-		\item \emph{Valgrind} --- is a flexible program for debugging and profiling Linux executables;
-		\item \emph{Google pref tools} --- is a collection of a high-performance multi-threaded malloc()
+		\item \textcolor{blue}{Valgrind} --- is a flexible program for debugging and profiling Linux executables;
+		\item \textcolor{blue}{Google pref tools} --- is a collection of a high-performance multi-threaded malloc()
 			implementation, plus some pretty nifty performance analysis tools. For Unix systems;
-		\item \emph{CRT Library} --- Visual Studio tools.
+		\item \textcolor{blue}{CRT Library} --- Visual Studio tools.
 	\end{itemize}
 	\end{exampleblock}
 
 	\begin{exampleblock}{Static analyzers}
 	\begin{itemize}
-		\item \emph{Cppcheck};
-		\item \emph{PvsStudio}.
+		\item \textcolor{blue}{Cppcheck};
+		\item \textcolor{blue}{PvsStudio}.
 	\end{itemize}
 	\end{exampleblock}
 \end{frame}
@@ -80,30 +82,30 @@
 	\item Freeing/lost the parent block first;
 	\item Improper handling of return values;
 	\item Many C library functions malloc's memory which MUST be freed;
-	\item Forget free or delete after malloc or new operation accordingly;
+	%\item Forget free or delete after malloc or new operation accordingly;
 	\item Inheritance, polymorphism and the wrong delete;
 	\item Default copy constructor may not give correct results;
 	\item For new[] uses delete (not delete[]);
 	\item Out of bounds array;
-	\item Forget free static/global variables or resource.
+	%\item Forget free static/global variables or resource.
 \end{itemize}
 }
 
 \subsection{Reassignment}
-\frame{\frametitle{Common mistakes. Reassignment} 
-\begin{itemize}
-	\item \emph{ Reassignment};
-	\item Freeing/lost the parent block first;
-	\item Improper handling of return values;
-	\item Many C library functions malloc's memory which MUST be freed;
-	\item Forget free or delete after malloc or new operation accordingly;
-	\item Inheritance, polymorphism and the wrong delete;
-	\item Default copy constructor may not give correct results;
-	\item For new[] uses delete (not delete[]).
-	\item Out of bounds array;
-	\item Forget free static/global variables or resource.
-\end{itemize}
-}
+% \frame{\frametitle{Common mistakes. Reassignment} 
+% \begin{itemize}
+% 	\item \textcolor{blue}{ Reassignment};
+% 	\item Freeing/lost the parent block first;
+% 	\item Improper handling of return values;
+% 	\item Many C library functions malloc's memory which MUST be freed;
+% 	%\item Forget free or delete after malloc or new operation accordingly;
+% 	\item Inheritance, polymorphism and the wrong delete;
+% 	\item Default copy constructor may not give correct results;
+% 	\item For new[] uses delete (not delete[]).
+% 	\item Out of bounds array;
+% 	%\item Forget free static/global variables or resource.
+% \end{itemize}
+% }
 
 \begin{frame}[fragile]
 	\frametitle{Reassignment. The code}
@@ -141,20 +143,20 @@
 \end{frame}
 
 \subsection{Freeing/lost the parent block first}
-\frame{\frametitle{Common mistakes. Freeing/lost the parent block first. The code} 
-\begin{itemize}
-	\item Reassignment;
-	\item \emph{ Freeing/lost the parent block first};
-	\item Improper handling of return values;
-	\item Many C library functions malloc's memory which MUST be freed;
-	\item Forget free or delete after malloc or new operation accordingly;
-	\item Inheritance, polymorphism and the wrong delete;
-	\item Default copy constructor may not give correct results;
-	\item For new[] uses delete (not delete[]).
-	\item Out of bounds array;
-	\item Forget free static/global variables or resource.
-\end{itemize}
-}
+% \frame{\frametitle{Common mistakes. Freeing/lost the parent block first. The code} 
+% \begin{itemize}
+% 	\item Reassignment;
+% 	\item \textcolor{blue}{ Freeing/lost the parent block first};
+% 	\item Improper handling of return values;
+% 	\item Many C library functions malloc's memory which MUST be freed;
+% 	%\item Forget free or delete after malloc or new operation accordingly;
+% 	\item Inheritance, polymorphism and the wrong delete;
+% 	\item Default copy constructor may not give correct results;
+% 	\item For new[] uses delete (not delete[]).
+% 	\item Out of bounds array;
+% 	%\item Forget free static/global variables or resource.
+% \end{itemize}
+% }
 
 \begin{frame}[fragile]
 \frametitle{Freeing/lost the parent block first. The code} 
@@ -210,20 +212,20 @@
 \end{frame}
 
 \subsection{Improper handling of return values}
-\frame{\frametitle{Common mistakes. Improper handling of return values} 
-\begin{itemize}
-	\item Reassignment;
-	\item Freeing/lost the parent block first;
-	\item \emph{ Improper handling of return values};
-	\item Many C library functions malloc's memory which MUST be freed;
-	\item Forget free or delete after malloc or new operation accordingly;
-	\item Inheritance, polymorphism and the wrong delete;
-	\item Default copy constructor may not give correct results;
-	\item For new[] uses delete (not delete[]).
-	\item Out of bounds array;
-	\item Forget free static/global variables or resource.
-\end{itemize}
-}
+% \frame{\frametitle{Common mistakes. Improper handling of return values} 
+% \begin{itemize}
+% 	\item Reassignment;
+% 	\item Freeing/lost the parent block first;
+% 	\item \textcolor{blue}{ Improper handling of return values};
+% 	\item Many C library functions malloc's memory which MUST be freed;
+% 	%\item Forget free or delete after malloc or new operation accordingly;
+% 	\item Inheritance, polymorphism and the wrong delete;
+% 	\item Default copy constructor may not give correct results;
+% 	\item For new[] uses delete (not delete[]).
+% 	\item Out of bounds array;
+% 	%\item Forget free static/global variables or resource.
+% \end{itemize}
+% }
 
 \begin{frame}[fragile]
 \frametitle{Improper handling of return values. The code} 
@@ -254,20 +256,20 @@
 \end{frame}
 
 \subsection{Many C library functions malloc's memory which MUST be freed}
-\frame{\frametitle{Common mistakes. Many C library functions malloc's memory which MUST be freed}
-\begin{itemize}
-	\item Reassignment;
-	\item Freeing/lost the parent block first;
-	\item Improper handling of return values;
-	\item \emph{ Many C library functions malloc's memory which MUST be freed};
-	\item Forget free or delete after malloc or new operation accordingly;
-	\item Inheritance, polymorphism and the wrong delete;
-	\item Default copy constructor may not give correct results;
-	\item For new[] uses delete (not delete[]);
-	\item Out of bounds array;
-	\item Forget free static/global variables or resource.
-\end{itemize}
-}
+% \frame{\frametitle{Common mistakes. Many C library functions malloc's memory which MUST be freed}
+% \begin{itemize}
+% 	\item Reassignment;
+% 	\item Freeing/lost the parent block first;
+% 	\item Improper handling of return values;
+% 	\item \textcolor{blue}{ Many C library functions malloc's memory which MUST be freed};
+% 	%\item Forget free or delete after malloc or new operation accordingly;
+% 	\item Inheritance, polymorphism and the wrong delete;
+% 	\item Default copy constructor may not give correct results;
+% 	\item For new[] uses delete (not delete[]);
+% 	\item Out of bounds array;
+% 	%\item Forget free static/global variables or resource.
+% \end{itemize}
+% }
 
 \begin{frame}[fragile]
 \frametitle{Many C library functions malloc's memory which MUST be freed. The code} 
@@ -290,20 +292,20 @@
 
 \subsection{Forget free or delete after malloc or new operation accordingly}
 
-\frame{\frametitle{Common mistakes. Forget free or delete after malloc or new operation accordingly}
-\begin{itemize}
-	\item Reassignment;
-	\item Freeing/lost the parent block first;
-	\item Improper handling of return values;
-	\item Many C library functions malloc's memory which MUST be freed;
-	\item \emph{ Forget free or delete after malloc or new operation accordingly};
-	\item Inheritance, polymorphism and the wrong delete;
-	\item Default copy constructor may not give correct results;
-	\item For new[] uses delete (not delete[]);
-	\item Out of bounds array;
-	\item Forget free static/global variables or resource.
-\end{itemize}
-}
+% \frame{\frametitle{Common mistakes. Forget free or delete after malloc or new operation accordingly}
+% \begin{itemize}
+% 	\item Reassignment;
+% 	\item Freeing/lost the parent block first;
+% 	\item Improper handling of return values;
+% 	\item Many C library functions malloc's memory which MUST be freed;
+% 	\item \textcolor{blue}{ Forget free or delete after malloc or new operation accordingly};
+% 	\item Inheritance, polymorphism and the wrong delete;
+% 	\item Default copy constructor may not give correct results;
+% 	\item For new[] uses delete (not delete[]);
+% 	\item Out of bounds array;
+% 	%\item Forget free static/global variables or resource.
+% \end{itemize}
+% }
 
 \begin{frame}[fragile]
 \frametitle{Forget free or delete after malloc or new operation accordingly. The code} 
@@ -334,20 +336,20 @@
 
 \subsection{Inheritance, polymorphism and the wrong delete}
 
-\frame{\frametitle{Common mistakes. Inheritance, polymorphism and the wrong delete}
-\begin{itemize}
-	\item Reassignment;
-	\item Freeing/lost the parent block first;
-	\item Improper handling of return values;
-	\item Many C library functions malloc's memory which MUST be freed;
-	\item Forget free or delete after malloc or new operation accordingly;
-	\item \emph{ Inheritance, polymorphism and the wrong delete};
-	\item Default copy constructor may not give correct results;
-	\item For new[] uses delete (not delete[]);
-	\item Out of bounds array;
-	\item Forget free static/global variables or resource.
-\end{itemize}
-}
+% \frame{\frametitle{Common mistakes. Inheritance, polymorphism and the wrong delete}
+% \begin{itemize}
+% 	\item Reassignment;
+% 	\item Freeing/lost the parent block first;
+% 	\item Improper handling of return values;
+% 	\item Many C library functions malloc's memory which MUST be freed;
+% 	%\item Forget free or delete after malloc or new operation accordingly;
+% 	\item \textcolor{blue}{ Inheritance, polymorphism and the wrong delete};
+% 	\item Default copy constructor may not give correct results;
+% 	\item For new[] uses delete (not delete[]);
+% 	\item Out of bounds array;
+% 	%\item Forget free static/global variables or resource.
+% \end{itemize}
+% }
 
 \begin{frame}[fragile]
 \frametitle{Inheritance, polymorphism and the wrong delete. The code} 
@@ -390,20 +392,20 @@ int main()
 
 
 \subsection{Default copy constructor may not give correct results}
-\frame{\frametitle{Common mistakes. Default copy constructor may not give correct results}
-\begin{itemize}
-	\item Reassignment;
-	\item Freeing/lost the parent block first;
-	\item Improper handling of return values;
-	\item Many C library functions malloc's memory which MUST be freed;
-	\item Forget free or delete after malloc or new operation accordingly;
-	\item Inheritance, polymorphism and the wrong delete;
-	\item \emph{ Default copy constructor may not give correct results};
-	\item For new[] uses delete (not delete[]);
-	\item Out of bounds array;
-	\item Forget free static/global variables or resource.
-\end{itemize}
-}
+% \frame{\frametitle{Common mistakes. Default copy constructor may not give correct results}
+% \begin{itemize}
+% 	\item Reassignment;
+% 	\item Freeing/lost the parent block first;
+% 	\item Improper handling of return values;
+% 	\item Many C library functions malloc's memory which MUST be freed;
+% 	%\item Forget free or delete after malloc or new operation accordingly;
+% 	\item Inheritance, polymorphism and the wrong delete;
+% 	\item \textcolor{blue}{ Default copy constructor may not give correct results};
+% 	\item For new[] uses delete (not delete[]);
+% 	\item Out of bounds array;
+% 	%\item Forget free static/global variables or resource.
+% \end{itemize}
+% }
 
 \begin{frame}[fragile]
 	\frametitle{Default copy constructor may not give correct results}
@@ -444,20 +446,20 @@ int main()
 \end{frame}
 
 \subsection{For new[] uses delete (not delete[]}
-\frame{\frametitle{Common mistakes. For new[] uses delete (not delete[])}
-\begin{itemize}
-	\item Reassignment;
-	\item Freeing/lost the parent block first;
-	\item Improper handling of return values;
-	\item Many C library functions malloc's memory which MUST be freed;
-	\item Forget free or delete after malloc or new operation accordingly;
-	\item Inheritance, polymorphism and the wrong delete;
-	\item Default copy constructor may not give correct results;
-	\item \emph{ For new[] uses delete (not delete[])};
-	\item Out of bounds array;
-	\item Forget free static/global variables or resource.
-\end{itemize}
-}
+% \frame{\frametitle{Common mistakes. For new[] uses delete (not delete[])}
+% \begin{itemize}
+% 	\item Reassignment;
+% 	\item Freeing/lost the parent block first;
+% 	\item Improper handling of return values;
+% 	\item Many C library functions malloc's memory which MUST be freed;
+% 	%\item Forget free or delete after malloc or new operation accordingly;
+% 	\item Inheritance, polymorphism and the wrong delete;
+% 	\item Default copy constructor may not give correct results;
+% 	\item \textcolor{blue}{ For new[] uses delete (not delete[])};
+% 	\item Out of bounds array;
+% 	%\item Forget free static/global variables or resource.
+% \end{itemize}
+% }
 
 \begin{frame}[fragile]
 	\frametitle{For new[] uses delete (not delete[])}
@@ -480,20 +482,20 @@ int main()
 \end{frame}
 
 \subsection{Out of bounds array}
-\frame{\frametitle{Common mistakes. Out of bounds array}
-\begin{itemize}
-	\item Reassignment;
-	\item Freeing/lost the parent block first;
-	\item Improper handling of return values;
-	\item Many C library functions malloc's memory which MUST be freed;
-	\item Forget free or delete after malloc or new operation accordingly;
-	\item Inheritance, polymorphism and the wrong delete;
-	\item Default copy constructor may not give correct results;
-	\item For new[] uses delete (not delete[]);
-	\item \emph{ Out of bounds array};
-	\item Forget free static/global variables or resource.
-\end{itemize}
-}
+% \frame{\frametitle{Common mistakes. Out of bounds array}
+% \begin{itemize}
+% 	\item Reassignment;
+% 	\item Freeing/lost the parent block first;
+% 	\item Improper handling of return values;
+% 	\item Many C library functions malloc's memory which MUST be freed;
+% 	%\item Forget free or delete after malloc or new operation accordingly;
+% 	\item Inheritance, polymorphism and the wrong delete;
+% 	\item Default copy constructor may not give correct results;
+% 	\item For new[] uses delete (not delete[]);
+% 	\item \textcolor{blue}{ Out of bounds array};
+% 	%\item Forget free static/global variables or resource.
+% \end{itemize}
+% }
 
 \begin{frame}[fragile]
 	\frametitle{Out of bounds array}
@@ -527,12 +529,12 @@ int main()
 %	\item Freeing/lost the parent block first;
 %	\item Improper handling of return values;
 %	\item Many C library functions malloc's memory which MUST be freed;
-%	\item Forget free or delete after malloc or new operation accordingly;
+%	%\item Forget free or delete after malloc or new operation accordingly;
 %	\item Inheritance, polymorphism and the wrong delete;
 %	\item Default copy constructor may not give correct results;
 %	\item For new[] uses delete (not delete[]);
 %	\item Out of bounds array;
-%	\item \emph{ Forget free static/global variables or resource}.
+%	\item \textcolor{blue}{ Forget free static/global variables or resource}.
 %\end{itemize}
 %\end{frame}
 
@@ -564,38 +566,39 @@ int main()
 %	\end{center}
 %\end{frame}
 
-\begin{frame}[fragile]
-	\frametitle{Forget free static/global variables or resource}
-	\begin{center}
-		\begin{lstlisting}[language=C++]
-void foo(void)
-{
-	return 1;
-}
-
-int main()
-{
-	foo();
-	return 0;
-}
-
-		\end{lstlisting}
-	\end{center}
-
-	\begin{center}
-		\begin{figure}
-			\includegraphics[height=1.5cm,width=11cm]{forget_free_static2.png}
-		\end{figure}
-	\end{center}
-\end{frame}
-
+% \begin{frame}[fragile]
+% 	\frametitle{Forget free static/global variables or resource}
+% 	\begin{center}
+% 		\begin{lstlisting}[language=C++]
+% void foo(void)
+% {
+% 	return 1;
+% }
+% 
+% int main()
+% {
+% 	foo();
+% 	return 0;
+% }
+% 
+% 		\end{lstlisting}
+% 	\end{center}
+% 
+% 	\begin{center}
+% 		\begin{figure}
+% 			\includegraphics[height=1.5cm,width=11cm]{forget_free_static2.png}
+% 		\end{figure}
+% 	\end{center}
+% \end{frame}
+% 
 \section{Tips to avoid problems}
 \begin{frame}[fragile]
 	\frametitle{Tips}
 	\begin{center}
-		\begin{exampleblock}{}
+		\begin{exampleblock}{asdasdasd }
 			Use smart pointers (shared\_ptr for example).
 		\end{exampleblock}
+
 		\begin{exampleblock}{}
 			Write own copy constructor for deep copy.
 		\end{exampleblock}
