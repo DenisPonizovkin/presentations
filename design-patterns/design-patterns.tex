@@ -1,0 +1,218 @@
+\documentclass[10pt,xcolor={usenames,dvipsnames}]{beamer}
+% \documentclass{bredelebeamer}
+\usetheme{JuanLesPins}
+
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{lmodern}
+
+
+
+\lstset{
+	frame=tb, % draw a frame at the top and bottom of the code block
+	tabsize=4, % tab space width
+	showstringspaces=false, % don't mark spaces in strings
+	numbers=left, % display line numbers on the left
+	commentstyle=\color{green}, % comment color
+	keywordstyle=\color{blue}, % keyword color
+	stringstyle=\color{red},% string color
+	basicstyle=\tiny
+}
+
+% \graphicspath{/media/sf\_work/docs/presentations/memory/img}
+\graphicspath{{Figures/}{img/}}
+
+% TODO: default, destructor with delete, output addres
+%
+%
+%
+\begin{document}
+
+\title{Design Patterns}
+\author{Denis Ponizovkin} 
+
+\institute[<EPAM>]
+
+\frame{\titlepage} 
+
+\frame{\frametitle{Table of contents}\tableofcontents} 
+
+
+\section{Introduction}
+\begin{frame}[fragile]
+	\frametitle{Design Pattern}
+	\begin{exampleblock}{Definition}
+	In software engineering, a software design pattern is a general,
+	reusable solution to a commonly occurring problem within a given
+	context in software design.
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Roots}
+	\begin{exampleblock}{}
+		The idea was introduced by the architect Christopher Alexander
+		and has been adapted for various other disciplines, most notably
+		computer science.
+	\end{exampleblock}
+
+	\begin{exampleblock}{}
+	\begin{quote}
+The elements of this language are entities called patterns. Each pattern describes a problem that occurs over and over again in our environment, and then describes the core of the solution to that problem, in such a way that you can use this solution a million times over, without ever doing it the same way twice. --- Christopher Alexander
+	\end{quote}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{From architecture to software}
+	\begin{exampleblock}{GoF}
+	\begin{quote}
+Christopher Alexander is the architect who first studied patterns in buildings and communications and developed "pattern language" for generating them. His work has inspired us time and again. There are many ways in which our work is like Alexander's. Both are based on observing existing systems and looking for patterns in them. Both have templates for describing patterns. Both rely on natural language and lots of examples to described patterns rather than formal languages, and both give rationales for each pattern. --- Design Patterns.
+	\end{quote}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Why do I need to study patterns}
+	\begin{itemize}
+		\item Reusability;
+		\item The use of common terminology;
+		\item Design patterns provide us with an abstract, high-level view of
+		both the problem and the whole process of object-oriented development.
+	\item design patterns allow a developer or a group of developers to find design solutions for complex problems without creating a cumbersome class inheritance hierarchy.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Other advantages}
+	\begin{itemize}
+		\item Efficiency improvement of single developers and whole group of developers;
+		\item The use of many design patterns also allows you to create more modifiable and flexible software;
+		\item Properly studied design patterns greatly assist in a common understanding of the basic principles of object-oriented design. 
+	\end{itemize}
+\end{frame}
+
+\section{Facade}
+\begin{frame}[fragile]
+	\frametitle{Intent}
+	\begin{exampleblock}{}
+	Provide a unified interface to a set of interfaces in a subsystem. Facade defines a
+	higher-level interface that makes the subsystem easier to use.
+	\end{exampleblock}
+
+		\begin{figure}
+			\includegraphics[height=1.2cm,width=6cm]{facade.png}
+			\caption{Facade UML-diagram}
+		\end{figure}
+
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Motivation}
+	\begin{exampleblock}{}
+Structuring a system into subsystems helps reduce complexity. A common design goal is to minimize the communication and dependencies between subsystems. One way to achieve this goal is to introduce a facade object that provides a single, simplified interface to the more general facilities of a subsystem.
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Applicability}
+	\begin{exampleblock}{}
+		\begin{itemize}
+			\item you want to provide a simple interface to a complex subsystem;
+			\item there are many dependencies between clients and the implementation classes
+of an abstraction;
+			\item you want to layer your subsystems.
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+\end{document}
+
+\section{Adapter (wrapper)}
+\begin{frame}[fragile]
+	\frametitle{Intent}
+	\begin{exampleblock}{}
+	Convert the interface of a class into another interface clients expect. Adapter lets
+	classes work together that couldn't otherwise because of incompatible interfaces.
+	\end{exampleblock}
+
+	\begin{figure}
+		\includegraphics[height=1.2cm,width=6cm]{adapter.png}
+		\caption{Adapter UML-diagram}
+	\end{figure}
+
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Motivation}
+	\begin{exampleblock}{}
+	\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Applicability}
+	\begin{exampleblock}{}
+		\begin{itemize}
+		\end{itemize}
+	\end{exampleblock}
+\end{frame}
+\section{}
+\begin{frame}[fragile]
+	\frametitle{Intent}
+	\begin{exampleblock}{}
+	\end{exampleblock}
+
+		\begin{figure}
+			\includegraphics[height=1.2cm,width=6cm]{facade.png}
+			\caption{Facade UML-diagram}
+		\end{figure}
+
+\end{frame}
+% 
+% \begin{frame}[fragile]
+% 	\frametitle{Motivation}
+% 	\begin{exampleblock}{}
+% 	\end{exampleblock}
+% \end{frame}
+% 
+% \begin{frame}[fragile]
+% 	\frametitle{Applicability}
+% 	\begin{exampleblock}{}
+% 		\begin{itemize}
+% 		\end{itemize}
+% 	\end{exampleblock}
+% \end{frame}
+
+
+% \section{}
+% \begin{frame}[fragile]
+% 	\frametitle{Intent}
+% 	\begin{exampleblock}{}
+% 	\end{exampleblock}
+% 
+% 		\begin{figure}
+% 			\includegraphics[height=1.2cm,width=6cm]{facade.png}
+% 			\caption{Facade UML-diagram}
+% 		\end{figure}
+% 
+% \end{frame}
+% 
+% \begin{frame}[fragile]
+% 	\frametitle{Motivation}
+% 	\begin{exampleblock}{}
+% 	\end{exampleblock}
+% \end{frame}
+% 
+% \begin{frame}[fragile]
+% 	\frametitle{Applicability}
+% 	\begin{exampleblock}{}
+% 		\begin{itemize}
+% 		\end{itemize}
+% 	\end{exampleblock}
+% \end{frame}
+
+
+\end{document}
+

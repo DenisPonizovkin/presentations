@@ -1,0 +1,6 @@
+\frametitle{Other advantages}
+	\begin{itemize}
+		\item Efficiency improvement of single developers and whole group of developers;
+		\item The use of many design patterns also allows you to create more modifiable and flexible software;
+		\item Properly studied design patterns greatly assist in a common understanding of the basic principles of object-oriented design.
+	\end{itemize}
