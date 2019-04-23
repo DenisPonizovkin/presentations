@@ -38,9 +38,6 @@
 
 \frame{\titlepage} 
 
-\frame{\frametitle{Table of contents}\tableofcontents} 
-
-
 \section{Introduction}
 \begin{frame}[fragile]
 	\frametitle{Design Pattern}
@@ -95,19 +92,24 @@ Christopher Alexander is the architect who first studied patterns in buildings a
 	\end{itemize}
 \end{frame}
 
-\section{Facade}
+\section{Structural Patterns}
+\begin{frame}[fragile]
+	\frametitle{Definition}
+	\begin{exampleblock}{}
+	Structural patterns are concerned with how classes and objects are composed to form
+	larger structures. Structural class patterns use inheritance to compose interfaces or
+	implementations. Structural object patterns describe ways to compose objects to
+	realize new functionality.
+	\end{exampleblock}
+\end{frame}
+
+\subsection{Facade}
 \begin{frame}[fragile]
 	\frametitle{Intent}
 	\begin{exampleblock}{}
 	Provide a unified interface to a set of interfaces in a subsystem. Facade defines a
 	higher-level interface that makes the subsystem easier to use.
 	\end{exampleblock}
-
-		\begin{figure}
-			\includegraphics[height=1.2cm,width=6cm]{facade.png}
-			\caption{Facade UML-diagram}
-		\end{figure}
-
 \end{frame}
 
 \begin{frame}[fragile]
@@ -115,6 +117,14 @@ Christopher Alexander is the architect who first studied patterns in buildings a
 	\begin{exampleblock}{}
 Structuring a system into subsystems helps reduce complexity. A common design goal is to minimize the communication and dependencies between subsystems. One way to achieve this goal is to introduce a facade object that provides a single, simplified interface to the more general facilities of a subsystem.
 	\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Example}
+		\begin{figure}
+			\includegraphics[height=5cm,width=6cm]{facade.png}
+			\caption{Facade UML-diagram}
+		\end{figure}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -128,26 +138,40 @@ of an abstraction;
 		\end{itemize}
 	\end{exampleblock}
 \end{frame}
-\end{document}
 
-\section{Adapter (wrapper)}
+\subsection{Adapter (wrapper)}
 \begin{frame}[fragile]
 	\frametitle{Intent}
 	\begin{exampleblock}{}
 	Convert the interface of a class into another interface clients expect. Adapter lets
 	classes work together that couldn't otherwise because of incompatible interfaces.
 	\end{exampleblock}
-
-	\begin{figure}
-		\includegraphics[height=1.2cm,width=6cm]{adapter.png}
-		\caption{Adapter UML-diagram}
-	\end{figure}
-
 \end{frame}
 
 \begin{frame}[fragile]
 	\frametitle{Motivation}
 	\begin{exampleblock}{}
+Sometimes a toolkit class that's designed for reuse isn't reusable only because its
+interface doesn't match the domain-specific interface an application requires.
+	\end{exampleblock}
+
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Example}
+	\begin{figure}
+		\includegraphics[height=4cm,width=8cm]{adapter.png}
+		\caption{Adapter UML-diagram}
+	\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Realisation}
+	\begin{exampleblock}{Two types of adapters}
+		\begin{itemize}
+		\item object --- realisation  via composition;
+		\item class --- realisation via inheritance.
+		\end{itemize}
 	\end{exampleblock}
 \end{frame}
 
@@ -155,21 +179,56 @@ of an abstraction;
 	\frametitle{Applicability}
 	\begin{exampleblock}{}
 		\begin{itemize}
-		\end{itemize}
+			\item you want to use an existing class, and its interface does not match the one
+you need.
+\item you want to create a reusable class that cooperates with unrelated or
+	unforeseen classes, that is, classes that don't necessarily have compatible interfaces.
+\item (object adapter only) you need to use several existing subclasses, but it's
+	unpractical to adapt their interface by subclassing every one. An object adapter
+	can adapt the interface of its parent class.
+	\end{itemize}
 	\end{exampleblock}
 \end{frame}
-\section{}
-\begin{frame}[fragile]
-	\frametitle{Intent}
-	\begin{exampleblock}{}
-	\end{exampleblock}
 
-		\begin{figure}
-			\includegraphics[height=1.2cm,width=6cm]{facade.png}
-			\caption{Facade UML-diagram}
-		\end{figure}
-
-\end{frame}
+% \subsection{Bridge}
+% \begin{frame}[fragile]
+% 	\frametitle{Intent}
+% 	\begin{exampleblock}{}
+% 	\end{exampleblock}
+% 
+% 		\begin{figure}
+% 			\includegraphics[height=1.2cm,width=6cm]{facade.png}
+% 			\caption{Facade UML-diagram}
+% 		\end{figure}
+% 
+% \end{frame}
+% 
+% \begin{frame}[fragile]
+% 	\frametitle{Motivation}
+% 	\begin{exampleblock}{}
+% 	\end{exampleblock}
+% \end{frame}
+% 
+% \begin{frame}[fragile]
+% 	\frametitle{Applicability}
+% 	\begin{exampleblock}{}
+% 		\begin{itemize}
+% 		\end{itemize}
+% 	\end{exampleblock}
+% \end{frame}
+% 
+% \subsection{}
+% \begin{frame}[fragile]
+% 	\frametitle{Intent}
+% 	\begin{exampleblock}{}
+% 	\end{exampleblock}
+% 
+% 		\begin{figure}
+% 			\includegraphics[height=1.2cm,width=6cm]{facade.png}
+% 			\caption{Facade UML-diagram}
+% 		\end{figure}
+% 
+% \end{frame}
 % 
 % \begin{frame}[fragile]
 % 	\frametitle{Motivation}
@@ -186,7 +245,7 @@ of an abstraction;
 % \end{frame}
 
 
-% \section{}
+% \subsection{}
 % \begin{frame}[fragile]
 % 	\frametitle{Intent}
 % 	\begin{exampleblock}{}
