@@ -92,6 +92,50 @@ Christopher Alexander is the architect who first studied patterns in buildings a
 	\end{itemize}
 \end{frame}
 
+\section{UML reminder}
+\subsection{Association}
+\begin{frame}[fragile]
+	\frametitle{Association}
+	\begin{exampleblock}{}
+	If two classes in a model need to communicate with each other, there must be link between them, and that can be represented by an association (connector).
+	We can define a one-to-one, one-to-many, many-to-one and many-to-many relationship among objects.
+	\end{exampleblock}
+
+	\begin{figure}
+		\includegraphics[height=1.5cm,width=8cm]{unidir-association.png}
+		\caption{Unidirectional assocation example}
+	\end{figure}
+
+	\begin{figure}
+		\includegraphics[height=1.5cm,width=8cm]{bidir-association.png}
+		\caption{Bidirectional assocation example}
+	\end{figure}
+\end{frame}
+
+\subsection{Aggregation}
+\begin{frame}[fragile]
+	\frametitle{Aggregation}
+		\begin{figure}
+			\includegraphics[height=5cm,width=6cm]{aggregation.png}
+		\end{figure}
+\end{frame}
+
+\subsection{Composition}
+\begin{frame}[fragile]
+	\frametitle{Composition}
+		\begin{figure}
+			\includegraphics[height=2cm,width=8cm]{composition.png}
+		\end{figure}
+\end{frame}
+
+\subsection{Association, aggregation, composition}
+\begin{frame}[fragile]
+	\frametitle{Association, aggregation, composition}
+		\begin{figure}
+			\includegraphics[height=5cm,width=6cm]{aac.jpg}
+		\end{figure}
+\end{frame}
+
 \section{Structural Patterns}
 \begin{frame}[fragile]
 	\frametitle{Definition}
@@ -122,8 +166,8 @@ Structuring a system into subsystems helps reduce complexity. A common design go
 \begin{frame}[fragile]
 	\frametitle{Example}
 		\begin{figure}
-			\includegraphics[height=5cm,width=6cm]{facade.png}
-			\caption{Facade UML-diagram}
+			\includegraphics[height=7cm,width=8cm]{facade.png}
+			\caption{Facade for starting a car system}
 		\end{figure}
 \end{frame}
 
@@ -151,17 +195,32 @@ of an abstraction;
 \begin{frame}[fragile]
 	\frametitle{Motivation}
 	\begin{exampleblock}{}
-Sometimes a toolkit class that's designed for reuse isn't reusable only because its
-interface doesn't match the domain-specific interface an application requires.
+	Sometimes a toolkit class that's designed for reuse isn't reusable only because its
+	interface doesn't match the domain-specific interface an application requires.
 	\end{exampleblock}
-
 \end{frame}
 
 \begin{frame}[fragile]
-	\frametitle{Example}
+	\frametitle{Example. The task}
 	\begin{figure}
-		\includegraphics[height=4cm,width=8cm]{adapter.png}
-		\caption{Adapter UML-diagram}
+		\includegraphics[height=4cm,width=8cm]{adapter-task.png}
+		\caption{Adapter usage case}
+	\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Example. The task resolution}
+	\begin{figure}
+		\includegraphics[height=4cm,width=8cm]{adapter-task-resolution1.png}
+		\caption{Adapter usage case}
+	\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]
+	\frametitle{Example. The task resolution}
+	\begin{figure}
+		\includegraphics[height=4cm,width=8cm]{adapter-task-resolution1.png}
+		\caption{Adapter usage case}
 	\end{figure}
 \end{frame}
 
@@ -179,29 +238,23 @@ interface doesn't match the domain-specific interface an application requires.
 	\frametitle{Applicability}
 	\begin{exampleblock}{}
 		\begin{itemize}
-			\item you want to use an existing class, and its interface does not match the one
-you need.
-\item you want to create a reusable class that cooperates with unrelated or
-	unforeseen classes, that is, classes that don't necessarily have compatible interfaces.
-\item (object adapter only) you need to use several existing subclasses, but it's
-	unpractical to adapt their interface by subclassing every one. An object adapter
-	can adapt the interface of its parent class.
+		\item you want to use an existing class, and its interface does not match the one you need.
+		\item you want to create a reusable class that cooperates with unrelated or
+		unforeseen classes, that is, classes that don't necessarily have compatible interfaces.
+		\item (object adapter only) you need to use several existing subclasses, but it's
+		unpractical to adapt their interface by subclassing every one. An object adapter
+		can adapt the interface of its parent class.
 	\end{itemize}
 	\end{exampleblock}
 \end{frame}
 
-% \subsection{Bridge}
-% \begin{frame}[fragile]
-% 	\frametitle{Intent}
-% 	\begin{exampleblock}{}
-% 	\end{exampleblock}
-% 
-% 		\begin{figure}
-% 			\includegraphics[height=1.2cm,width=6cm]{facade.png}
-% 			\caption{Facade UML-diagram}
-% 		\end{figure}
-% 
-% \end{frame}
+\subsection{Bridge}
+\begin{frame}[fragile]
+	\frametitle{Intent}
+	\begin{exampleblock}{}
+	Decouple an abstraction from its implementation so that the two can vary independently
+	\end{exampleblock}
+\end{frame}
 % 
 % \begin{frame}[fragile]
 % 	\frametitle{Motivation}
